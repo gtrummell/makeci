@@ -31,6 +31,25 @@ job.  MakeCI's workflow is as follows:
 2. From the `git` changelist, make a list of changed components.
 3. Change directory to each component and run `make ci`.
 
+How to use MakeCI
+-----------------
+Most CI tools have a configuration file or directory that is normally kept in the root
+directory of the repository.  We will change this configuration file so that it only
+calls `makeci` instead of running your tests directly in its proprietary language.
+
+You can call `makci` directly from your own repository by copying it there, or you can
+call it from this repository by using `curl` and GitHub's raw text view.  Like this:
+
+    `bash <(curl -s https://github.com/gtrummell/makeci/blob/master/makeci.sh)`
+
+1. Create a `Makefile` for each component or project in your repository.  Ensure there
+   is a target named `ci` that runs your tests, or calls other make targets that run
+   your tests.
+2. Edit your CI tool's config file.  Remove all original references to your tests and
+   replace them with a single call to `makeci`
+3. Commit the change.  Test by making changes in two different projects and ensuring
+   they both build.
+
 Future Design Goals for MakeCI
 ------------------------------
 * Code a version in Golang
