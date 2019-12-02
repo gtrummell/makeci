@@ -41,6 +41,10 @@ build_changed() {
 # Run `make ci` against each found Makefile
     cd ${REPO_DIR}
     MAKEFILE_DIRS=( $(find_makefile_dirs) )
+    echo -e "Found changes in the following component paths:"
+    for MAKEFILE_DIR in ${MAKEFILE_DIRS[*]}; do
+    echo "  ${MAKEFILE_DIR}"
+    done
     for MAKEFILE_DIR in ${MAKEFILE_DIRS[*]}; do
         echo "Building component in ${MAKEFILE_DIR} ..."
         cd ${MAKEFILE_DIR}
@@ -52,6 +56,6 @@ build_changed() {
 if [[ $(echo $@ | grep " -h" | wc -l) -gt 1 ]]; then
     show_help
 else
-    echo "Found changes in the following component paths:"
     build_changed
 fi
+
